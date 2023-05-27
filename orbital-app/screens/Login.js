@@ -31,7 +31,7 @@ import { StyledContainer,
 import { View } from 'react-native';
 
 //Colors
-const {brand, darkLight} = Colors;
+const {brand, darkLight, primary} = Colors;
 
 const Login = () => {
     const [hidePassword, setHidePassword] = useState(true);
