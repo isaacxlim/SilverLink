@@ -34,7 +34,7 @@ import { Keyboard, View } from 'react-native';
 //Colors
 const {brand, darkLight, primary} = Colors;
 
-const Login = () => {
+const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true);
 
 
@@ -50,6 +50,7 @@ const Login = () => {
                     initialValues={{email: '', password: ''}}
                     onSubmit={(values) => {
                         console.log(values);
+                        navigation.navigate("Welcome");
                     }}
                 > 
                     {({handleChange, handleBlur, handleSubmit, values}) => (
@@ -87,7 +88,7 @@ const Login = () => {
                             <Line />
                             <ExtraView>
                                 <ExtraText>Don't have an account already? </ExtraText>
-                                <TextLink>
+                                <TextLink onPress={() => navigation.navigate('Signup')}>
                                     <TextLinkContent>Signup</TextLinkContent>
                                 </TextLink>
 

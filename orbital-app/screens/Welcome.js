@@ -36,7 +36,7 @@ import { View } from 'react-native';
 //Colors
 const {brand, darkLight} = Colors;
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true);
 
 
@@ -52,7 +52,7 @@ const Welcome = () => {
                     <StyledFormArea>
                         <Avatar resizeMode="cover" source={require('./../assets/SilverLinkLogo.png')} />
                         <Line />   
-                        <StyledButton onPress={() => {}}>
+                        <StyledButton onPress = {() => navigation.navigate('Login')}>
                             <ButtonText>
                                 Logout
                             </ButtonText>
