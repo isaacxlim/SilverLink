@@ -5,7 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
 //icons
 import { Octicons, Ionicons} from '@expo/vector-icons';
-//Colors
+//Keyboard avoiding
+import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper';
 
 import { StyledContainer, 
     InnerContainer, 
@@ -28,7 +29,7 @@ import { StyledContainer,
     TextLinkContent
 } from './../components/styles'; 
 
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 
 //Colors
 const {brand, darkLight, primary} = Colors;
@@ -38,7 +39,7 @@ const Login = () => {
 
 
     return (
-        <StyledContainer>
+        <KeyboardAvoidingWrapper><StyledContainer>
             <StatusBar style = "dark" />
             <InnerContainer>
                 <PageLogo resizeMode="cover" source={require('./../assets/SilverLinkLogo.png')} />
@@ -96,6 +97,7 @@ const Login = () => {
                     </Formik>
             </InnerContainer>
         </StyledContainer>
+        </KeyboardAvoidingWrapper>
     );
 };
 

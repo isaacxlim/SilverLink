@@ -5,7 +5,6 @@ import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
 //icons
 import { Octicons, Ionicons} from '@expo/vector-icons';
-//Colors
 
 import { StyledContainer, 
     InnerContainer, 
@@ -36,6 +35,9 @@ const {brand, darkLight, primary} = Colors;
 //DateTimePicker
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+//Keyboard avoiding
+import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper';
+
 const Signup = () => {
     const [hidePassword, setHidePassword] = useState(true);
     const [show, setShow] = useState(false);
@@ -57,6 +59,7 @@ const Signup = () => {
 
 
     return (
+        <KeyboardAvoidingWrapper>
         <StyledContainer>
             <StatusBar style = "dark" />
             <InnerContainer>
@@ -162,6 +165,7 @@ const Signup = () => {
                     </Formik>
             </InnerContainer>
         </StyledContainer>
+        </KeyboardAvoidingWrapper>
     );
 };
 
