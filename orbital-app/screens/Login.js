@@ -11,7 +11,7 @@ const Login = () => {
     return (
         <StyledContainer>
             <InnerContainer>
-                <PageLogo resizeMode="cover" source={require('./../assets/SilverLinkLogo')} />
+                <PageLogo resizeMode="cover" source={require('./../assets/SilverLinkLogo.png')} />
                 <PageTitle>SilverLink</PageTitle>
             </InnerContainer>
         </StyledContainer>
