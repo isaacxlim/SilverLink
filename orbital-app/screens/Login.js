@@ -7,7 +7,27 @@ import { Formik } from 'formik';
 import { Octicons, Ionicons} from '@expo/vector-icons';
 //Colors
 
-import { StyledContainer, InnerContainer, PageLogo, PageTitle, SubTitle, StyledFormArea, LeftIcon, StyledInputLabel, StyledTextInput, RightIcon, StyledButton, ButtonText, Colors} from './../components/styles'; 
+import { StyledContainer, 
+    InnerContainer, 
+    PageLogo, 
+    PageTitle, 
+    SubTitle, 
+    StyledFormArea, 
+    LeftIcon, 
+    StyledInputLabel, 
+    StyledTextInput, 
+    RightIcon, 
+    StyledButton, 
+    ButtonText, 
+    Colors,
+    MsgBox, 
+    Line,
+    ExtraView,
+    ExtraText,
+    TextLink,
+    TextLinkContent
+} from './../components/styles'; 
+
 import { View } from 'react-native';
 
 //Colors
@@ -57,11 +77,21 @@ const Login = () => {
                                 hidePassword={hidePassword}
                                 setHidePassword={setHidePassword}
                             />
+                            <MsgBox>...</MsgBox>
                             <StyledButton onPress={handleSubmit}>
                                 <ButtonText>
                                     Login
                                 </ButtonText>
                             </StyledButton>
+                            <Line />
+                            <ExtraView>
+                                <ExtraText>Don't have an account already? </ExtraText>
+                                <TextLink>
+                                    <TextLinkContent>Signup</TextLinkContent>
+                                </TextLink>
+
+                            </ExtraView>
+
                         </StyledFormArea>)}
                     </Formik>
             </InnerContainer>
