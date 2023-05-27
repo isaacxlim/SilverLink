@@ -40,5 +40,5 @@ export const PageTitle = styled.Text`
     text-align: center;
     font-weight: bold;
     color: ${brand};
-    padding: 10px;
+    padding: 5px;
 `;
