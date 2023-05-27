@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 //formik
-import { Formik } from 'expo-status-bar';
+import { Formik } from 'formik';
 //icons
 import { Octicons } from '@expo/vector-icons';
 //Colors
