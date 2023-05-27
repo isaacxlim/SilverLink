@@ -13,9 +13,10 @@ export const Colors = {
     brand: "#000000",
     green: "#10B981",
     red: "#EF4444",
+    blue: "#0000FF"
 };
 
-const {primary, secondary, tertiary, darkLight, brand, green, red} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, blue} = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -135,6 +136,6 @@ export const TextLink = styled.TouchableOpacity`
 `;
 
 export const TextLinkContent = styled.Text`
-    color: ${brand};
+    color: ${blue};
     font-size: 15px;
 `;
