@@ -25,7 +25,10 @@ import { StyledContainer,
     ExtraView,
     ExtraText,
     TextLink,
-    TextLinkContent
+    TextLinkContent,
+    WelcomeContainer,
+    WelcomeImage,
+    Avatar
 } from './../components/styles'; 
 
 import { View } from 'react-native';
@@ -38,64 +41,27 @@ const Welcome = () => {
 
 
     return (
-        <StyledContainer>
+        <>
             <StatusBar style = "dark" />
             <InnerContainer>
-                <PageLogo resizeMode="cover" source={require('./../assets/SilverLinkLogo.png')} />
-                <PageTitle>SilverLink</PageTitle>
-                <SubTitle> Account Login</SubTitle>
+                <WelcomeImage resizeMode="center" source={require('./../assets/NursesImage.png')} />
 
-                <Formik
-                    initialValues={{email: '', password: ''}}
-                    onSubmit={(values) => {
-                        console.log(values);
-                    }}
-                > 
-                    {({handleChange, handleBlur, handleSubmit, values}) => (
-                        <StyledFormArea>
-                            <MyTextInput 
-                                label="Email Address"
-                                icon="mail"
-                                placeholder="name@example.com"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                keyboardType="email-address"
-                            />
+                <WelcomeContainer> 
+                    <PageTitle welcome={true}>Home Page</PageTitle>
+                    <SubTitle welcome={true}> Welcome!</SubTitle>
+                    <StyledFormArea>
+                        <Avatar resizeMode="cover" source={require('./../assets/SilverLinkLogo.png')} />
+                        <Line />   
+                        <StyledButton onPress={() => {}}>
+                            <ButtonText>
+                                Logout
+                            </ButtonText>
+                        </StyledButton>
 
-                            <MyTextInput 
-                                label="Password"
-                                icon="lock"
-                                placeholder="* * * * * * * *"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('password')}
-                                onBlur={handleBlur('password')}
-                                value={values.password}
-                                secureTextEntry={hidePassword}
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword={setHidePassword}
-                            />
-                            <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
-                                <ButtonText>
-                                    Login
-                                </ButtonText>
-                            </StyledButton>
-                            <Line />
-                            <ExtraView>
-                                <ExtraText>Don't have an account already? </ExtraText>
-                                <TextLink>
-                                    <TextLinkContent>Signup</TextLinkContent>
-                                </TextLink>
-
-                            </ExtraView>
-
-                        </StyledFormArea>)}
-                    </Formik>
+                    </StyledFormArea>
+                </WelcomeContainer>
             </InnerContainer>
-        </StyledContainer>
+        </>
     );
 };
 
