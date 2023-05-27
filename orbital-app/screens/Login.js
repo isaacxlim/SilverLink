@@ -40,6 +40,18 @@ const Login = () => {
                                 value={values.email}
                                 keyboardType="email-address"
                             />
+
+                            <MyTextInput 
+                                label="Password"
+                                icon="lock"
+                                placeholder="* * * * * * * *"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                value={values.password}
+                                secureTextEntry={true}
+                                isPassword={true}
+                            />
                         </StyledFormArea>)}
                     </Formik>
             </InnerContainer>
@@ -47,13 +59,14 @@ const Login = () => {
     );
 };
 
-const MyTextInput = ({ label, icon, ...props }) => {
+const MyTextInput = ({ label, icon, isPassword, ...props }) => {
     return (<View> 
         <LeftIcon>
             <Octicons name={icon} size ={30} color={brand}/>
         </LeftIcon>
         <StyledInputLabel>{label}</StyledInputLabel>
         <StyledTextInput {...props} />
+
     </View>);
 };
 
