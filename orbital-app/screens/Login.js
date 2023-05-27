@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 import {
     StyledContainer,
@@ -10,6 +11,7 @@ import {
 const Login = () => {
     return (
         <StyledContainer>
+            <StatusBar style = "dark" />
             <InnerContainer>
                 <PageLogo resizeMode="cover" source={require('./../assets/SilverLinkLogo.png')} />
                 <PageTitle>SilverLink</PageTitle>
