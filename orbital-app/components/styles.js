@@ -82,7 +82,7 @@ export const LeftIcon = styled.View`
 `;
 
 export const RightIcon = styled.TouchableOpacity`
-    left: 15px;
+    right: 15px;
     top: 38px;
     position: absolute;
     z-index: 1;
@@ -92,6 +92,7 @@ export const StyledButton = styled.TouchableOpacity`
     padding: 15px;
     background-color: ${brand};
     justify-content: center;
+    align-items: center;
     border-radius: 5px;
     margin-vertical: 5px;
     height: 60px;
