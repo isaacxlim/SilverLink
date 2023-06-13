@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "orbital-app",
-    "slug": "orbital-app",
+    "name": "SilverLink",
+    "slug": "SilverLink",
+    "privacy": "public",
+    "description": "SilverLink",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +27,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f3fa84b9-712d-4db2-93b1-8d03673d7e5e"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f3fa84b9-712d-4db2-93b1-8d03673d7e5e"
     }
   }
 }
