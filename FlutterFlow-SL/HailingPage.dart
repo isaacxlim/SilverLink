@@ -46,9 +46,9 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -57,7 +57,7 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
             buttonSize: 60,
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: Colors.black,
               size: 30,
             ),
             onPressed: () async {
@@ -65,8 +65,11 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
             },
           ),
           title: Text(
-            'Search patients',
-            style: FlutterFlowTheme.of(context).headlineSmall,
+            'Search nurses',
+            style: FlutterFlowTheme.of(context).headlineSmall.override(
+                  fontFamily: 'Outfit',
+                  color: Colors.black,
+                ),
           ),
           actions: [],
           centerTitle: false,
@@ -88,7 +91,7 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                     labelStyle: FlutterFlowTheme.of(context).labelMedium,
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).alternate,
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(8),
@@ -115,7 +118,7 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                       borderRadius: BorderRadius.circular(8),
                     ),
                     filled: true,
-                    fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                    fillColor: FlutterFlowTheme.of(context).primaryBtnText,
                     prefixIcon: Icon(
                       Icons.search_outlined,
                       color: FlutterFlowTheme.of(context).secondaryText,
@@ -134,15 +137,37 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                     child: Text(
-                      'Patients matching search',
+                      'Nurses matching search: ',
                       style: FlutterFlowTheme.of(context).labelMedium,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(4, 12, 16, 0),
-                    child: Text(
-                      '24',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                    child: FutureBuilder<int>(
+                      future: queryNursesRecordCount(),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          );
+                        }
+                        int textCount = snapshot.data!;
+                        return Text(
+                          textCount.toString(),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.black,
+                                  ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -177,10 +202,11 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                           return Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
                             child: Container(
-                              width: 100,
+                              width: 0,
+                              height: 90,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 0,
@@ -208,60 +234,100 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                                     Expanded(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                                    6, 0, 0, 0),
                                             child: Text(
                                               listViewNursesRecord.name,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyLarge,
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.black,
+                                                      ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(12, 0, 0, 0),
-                                                  child: Text(
-                                                    listViewNursesRecord
-                                                        .yearsOfExp
-                                                        .toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium,
-                                                  ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(6, 0, 0, 0),
+                                                child: Text(
+                                                  listViewNursesRecord
+                                                      .yearsOfExp
+                                                      .toString(),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.black,
+                                                      ),
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(4, 0, 0, 0),
-                                                  child: Text(
-                                                    listViewNursesRecord
-                                                        .visitPrice
-                                                        .toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                              ),
+                                              Text(
+                                                ' Years of Experience',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               'Readex Pro',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
+                                                          color: Colors.black,
                                                         ),
-                                                  ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(6, 0, 0, 0),
+                                                child: Text(
+                                                  '\$',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                      ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                              Text(
+                                                listViewNursesRecord.visitPrice
+                                                    .toString(),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                    ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -269,7 +335,7 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                                     Card(
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                          .primaryText,
                                       elevation: 1,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(40),
