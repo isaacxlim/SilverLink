@@ -1,19 +1,30 @@
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:text_search/text_search.dart';
 
 import 'hailing_page_model.dart';
 export 'hailing_page_model.dart';
 
 class HailingPageWidget extends StatefulWidget {
-  const HailingPageWidget({Key? key}) : super(key: key);
+  const HailingPageWidget({
+    Key? key,
+    required this.datePicked,
+    this.numberOfResults,
+  }) : super(key: key);
+
+  final DateTime? datePicked;
+  final String? numberOfResults;
 
   @override
   _HailingPageWidgetState createState() => _HailingPageWidgetState();
@@ -85,9 +96,32 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                 padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
                 child: TextFormField(
                   controller: _model.textController,
+                  onChanged: (_) => EasyDebounce.debounce(
+                    '_model.textController',
+                    Duration(milliseconds: 2000),
+                    () async {
+                      await queryNursesRecordOnce()
+                          .then(
+                            (records) => _model.simpleSearchResults =
+                                TextSearch(
+                              records
+                                  .map(
+                                    (record) =>
+                                        TextSearchItem(record, [record.name!]),
+                                  )
+                                  .toList(),
+                            )
+                                    .search(_model.textController.text)
+                                    .map((r) => r.object)
+                                    .toList(),
+                          )
+                          .onError((_, __) => _model.simpleSearchResults = [])
+                          .whenComplete(() => setState(() {}));
+                    },
+                  ),
                   obscureText: false,
                   decoration: InputDecoration(
-                    labelText: 'Search for patients...',
+                    labelText: 'Search for nurses...',
                     labelStyle: FlutterFlowTheme.of(context).labelMedium,
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -124,10 +158,75 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                   ),
-                  style: FlutterFlowTheme.of(context).bodyMedium,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.black,
+                      ),
                   maxLines: null,
                   validator:
                       _model.textControllerValidator.asValidator(context),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                        child: FlutterFlowChoiceChips(
+                          options: [
+                            ChipData('Male', Icons.tag_faces_outlined),
+                            ChipData('Female', Icons.face)
+                          ],
+                          onChanged: (val) =>
+                              setState(() => _model.choiceChipsValues = val),
+                          selectedChipStyle: ChipStyle(
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                            iconColor: FlutterFlowTheme.of(context).primaryText,
+                            iconSize: 18,
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          unselectedChipStyle: ChipStyle(
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).alternate,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                ),
+                            iconColor:
+                                FlutterFlowTheme.of(context).secondaryText,
+                            iconSize: 18,
+                            elevation: 0,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          chipSpacing: 12,
+                          rowSpacing: 12,
+                          multiselect: true,
+                          initialized: _model.choiceChipsValues != null,
+                          alignment: WrapAlignment.start,
+                          controller: _model.choiceChipsValueController ??=
+                              FormFieldController<List<String>>(
+                            [],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Row(
@@ -143,31 +242,9 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(4, 12, 16, 0),
-                    child: FutureBuilder<int>(
-                      future: queryNursesRecordCount(),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: CircularProgressIndicator(
-                                color: FlutterFlowTheme.of(context).primary,
-                              ),
-                            ),
-                          );
-                        }
-                        int textCount = snapshot.data!;
-                        return Text(
-                          textCount.toString(),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.black,
-                                  ),
-                        );
-                      },
+                    child: Text(
+                      '24',
+                      style: FlutterFlowTheme.of(context).bodyMedium,
                     ),
                   ),
                 ],
@@ -176,7 +253,12 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
                   child: StreamBuilder<List<NursesRecord>>(
-                    stream: queryNursesRecord(),
+                    stream: queryNursesRecord(
+                      queryBuilder: (nursesRecord) => nursesRecord
+                          .where('endDateAvailable',
+                              isGreaterThanOrEqualTo: widget.datePicked)
+                          .whereIn('gender', _model.choiceChipsValues),
+                    ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
