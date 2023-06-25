@@ -238,7 +238,7 @@ class _TeleConsultCallPageWidgetState extends State<TeleConsultCallPageWidget> {
                                 size: 24,
                               ),
                               onPressed: () async {
-                                context.pushNamed('HomePage');
+                                context.pushNamed('TeleConsultPage');
                               },
                             ),
                           ),
