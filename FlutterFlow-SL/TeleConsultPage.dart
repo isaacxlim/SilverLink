@@ -88,7 +88,7 @@ class _TeleConsultPageWidgetState extends State<TeleConsultPageWidget>
                   size: 30,
                 ),
                 onPressed: () async {
-                  context.pop();
+                  context.pushNamed('HomePage');
                 },
               ),
               title: Text(

@@ -101,16 +101,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Hello, ',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .override(
-                                fontFamily: 'Outfit',
-                                color: Color(0xFF14181B),
-                                fontSize: 24,
-                                fontWeight: FontWeight.normal,
-                              ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              'Hello, ',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF14181B),
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ],
                         ),
                         Text(
                           'What would you like to do?',

@@ -86,14 +86,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                               FlutterFlowTheme.of(context).titleMedium,
                           labelColor: Colors.black,
                           unselectedLabelColor: Colors.white,
-                          backgroundColor: Color(0x004B39EF),
-                          unselectedBackgroundColor: Color(0x00FFFFFF),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryBtnText,
+                          unselectedBackgroundColor:
+                              FlutterFlowTheme.of(context).secondaryText,
                           borderColor: Colors.black,
-                          borderWidth: 0,
-                          borderRadius: 0,
+                          unselectedBorderColor: Colors.black,
+                          borderWidth: 2,
+                          borderRadius: 50,
                           elevation: 0,
                           labelPadding:
                               EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                          buttonMargin:
+                              EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                           tabs: [
                             Tab(
                               text: 'Sign In',
@@ -319,6 +324,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           color: Colors.transparent,
                                           width: 1,
                                         ),
+                                        borderRadius: BorderRadius.circular(30),
                                       ),
                                     ),
                                   ),
@@ -351,6 +357,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           color: Colors.transparent,
                                           width: 1,
                                         ),
+                                        borderRadius: BorderRadius.circular(30),
                                       ),
                                     ),
                                   ),
@@ -670,6 +677,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           color: Colors.transparent,
                                           width: 1,
                                         ),
+                                        borderRadius: BorderRadius.circular(30),
                                       ),
                                     ),
                                   ),
