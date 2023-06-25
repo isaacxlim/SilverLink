@@ -36,6 +36,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
@@ -238,7 +240,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        context.pushNamed('HailingSearchPage');
+                        context.pushNamed(
+                          'HailingSearchPage',
+                          queryParameters: {
+                            'defaultDate': serializeParam(
+                              null,
+                              ParamType.DateTime,
+                            ),
+                          }.withoutNulls,
+                        );
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,

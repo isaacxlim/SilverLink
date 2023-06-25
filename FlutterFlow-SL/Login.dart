@@ -31,6 +31,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     _model.passwordController ??= TextEditingController();
     _model.emailAddressCreateController ??= TextEditingController();
     _model.passwordCreateController ??= TextEditingController();
+    _model.confirmPasswordCreateController ??= TextEditingController();
   }
 
   @override
@@ -42,6 +43,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
@@ -78,17 +81,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                         child: FlutterFlowButtonTabBar(
                           useToggleButtonStyle: false,
                           isScrollable: true,
-                          labelStyle:
-                              FlutterFlowTheme.of(context).titleMedium.override(
-                                    fontFamily: 'Outfit',
-                                  ),
+                          labelStyle: FlutterFlowTheme.of(context).titleMedium,
                           unselectedLabelStyle:
-                              FlutterFlowTheme.of(context).titleMedium.override(
-                                    fontFamily: 'Outfit',
-                                  ),
-                          labelColor:
-                              FlutterFlowTheme.of(context).primaryBtnText,
+                              FlutterFlowTheme.of(context).titleMedium,
+                          labelColor: Colors.black,
                           unselectedLabelColor: Colors.white,
+                          backgroundColor: Color(0x004B39EF),
+                          unselectedBackgroundColor: Color(0x00FFFFFF),
+                          borderColor: Colors.black,
                           borderWidth: 0,
                           borderRadius: 0,
                           elevation: 0,
@@ -123,7 +123,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             _model.emailAddressController,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Email Address',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodySmall
@@ -132,16 +131,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     color: Colors.black,
                                                     fontSize: 12,
                                                   ),
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Outfit',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                fontSize: 14,
-                                              ),
+                                          hintText: 'Email Address',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Outfit',
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                  ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color: Colors.white,
@@ -160,7 +158,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color: Color(0x00000000),
+                                              color: Color(0xFFFF5555),
                                               width: 1,
                                             ),
                                             borderRadius:
@@ -169,7 +167,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           focusedErrorBorder:
                                               OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color: Color(0x00000000),
+                                              color: Color(0xFFFF5555),
                                               width: 1,
                                             ),
                                             borderRadius:
@@ -190,7 +188,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               color: Colors.black,
                                             ),
                                         textAlign: TextAlign.start,
-                                        maxLines: null,
                                         validator: _model
                                             .emailAddressControllerValidator
                                             .asValidator(context),
@@ -204,15 +201,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       controller: _model.passwordController,
                                       obscureText: !_model.passwordVisibility,
                                       decoration: InputDecoration(
-                                        labelText: 'Password',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
                                               fontFamily: 'Readex Pro',
                                               color: Colors.black,
                                             ),
+                                        hintText: 'Password',
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .bodySmall,
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.black,
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Colors.white,
@@ -231,7 +232,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         ),
                                         errorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0x00000000),
+                                            color: Color(0xFFFF5555),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -239,7 +240,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0x00000000),
+                                            color: Color(0xFFFF5555),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -325,9 +326,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 20, 0, 0),
                                     child: FFButtonWidget(
-                                      onPressed: () {
-                                        print(
-                                            'Button-ForgotPassword pressed ...');
+                                      onPressed: () async {
+                                        context.pushNamed('PasswordReset');
                                       },
                                       text: 'Forgot Password?',
                                       options: FFButtonOptions(
@@ -371,15 +371,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           _model.emailAddressCreateController,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Email Address',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
                                               fontFamily: 'Readex Pro',
                                               color: Colors.black,
                                             ),
+                                        hintText: 'Email Address',
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .bodySmall,
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.black,
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Colors.white,
@@ -424,7 +428,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             fontFamily: 'Readex Pro',
                                             color: Color(0xFF0F1113),
                                           ),
-                                      maxLines: null,
                                       validator: _model
                                           .emailAddressCreateControllerValidator
                                           .asValidator(context),
@@ -432,20 +435,20 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 12, 20, 0),
+                                        20, 6, 20, 0),
                                     child: TextFormField(
                                       controller:
                                           _model.passwordCreateController,
                                       obscureText:
                                           !_model.passwordCreateVisibility,
                                       decoration: InputDecoration(
-                                        labelText: 'Password',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
                                               fontFamily: 'Readex Pro',
                                               color: Colors.black,
                                             ),
+                                        hintText: 'Password',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -521,10 +524,114 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 24, 0, 0),
+                                        20, 6, 20, 0),
+                                    child: TextFormField(
+                                      controller: _model
+                                          .confirmPasswordCreateController,
+                                      obscureText: !_model
+                                          .confirmPasswordCreateVisibility,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.black,
+                                            ),
+                                        hintText: 'Confirm Password',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.black,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.white,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                20, 24, 20, 24),
+                                        suffixIcon: InkWell(
+                                          onTap: () => setState(
+                                            () => _model
+                                                    .confirmPasswordCreateVisibility =
+                                                !_model
+                                                    .confirmPasswordCreateVisibility,
+                                          ),
+                                          focusNode:
+                                              FocusNode(skipTraversal: true),
+                                          child: Icon(
+                                            _model.confirmPasswordCreateVisibility
+                                                ? Icons.visibility_outlined
+                                                : Icons.visibility_off_outlined,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            color: Color(0xFF0F1113),
+                                          ),
+                                      validator: _model
+                                          .confirmPasswordCreateControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 64, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         GoRouter.of(context).prepareAuthEvent();
+                                        if (_model.passwordCreateController
+                                                .text !=
+                                            _model
+                                                .confirmPasswordCreateController
+                                                .text) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Passwords don\'t match!',
+                                              ),
+                                            ),
+                                          );
+                                          return;
+                                        }
 
                                         final user = await authManager
                                             .createAccountWithEmail(
