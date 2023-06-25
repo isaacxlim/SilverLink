@@ -64,7 +64,7 @@ class _PasswordResetWidgetState extends State<PasswordResetWidget> {
             },
           ),
           title: Text(
-            'Forget Password',
+            'Password Reset',
             style: FlutterFlowTheme.of(context).headlineSmall.override(
                   fontFamily: 'Outfit',
                   color: FlutterFlowTheme.of(context).primaryBtnText,
