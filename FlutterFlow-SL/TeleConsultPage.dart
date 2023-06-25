@@ -468,7 +468,7 @@ class _TeleConsultPageWidgetState extends State<TeleConsultPageWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                size: 28,
+                                                size: 24,
                                               ),
                                             ),
                                           ),
