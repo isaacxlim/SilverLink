@@ -68,6 +68,11 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
     super.initState();
     _model = createModel(context, () => HailingConfirmationModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      context.safePop();
+    });
+
     _model.textController ??= TextEditingController();
     setupAnimations(
       animationsMap.values.where((anim) =>
