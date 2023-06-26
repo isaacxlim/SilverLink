@@ -42,6 +42,7 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
     _model = createModel(context, () => HailingPageModel());
 
     _model.textController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -74,7 +75,8 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
               size: 30,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('HailingSearchPage');
+
               setState(() {
                 FFAppState().dateEntered = false;
               });
@@ -330,104 +332,163 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                             return Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-                              child: Container(
-                                width: 0,
-                                height: 90,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 0,
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      offset: Offset(0, 1),
-                                    )
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 8, 8, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(40),
-                                        child: Image.network(
-                                          'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-                                          width: 60,
-                                          height: 60,
-                                          fit: BoxFit.cover,
-                                        ),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed(
+                                    'HailingConfirmation',
+                                    queryParameters: {
+                                      'nurseName': serializeParam(
+                                        listViewNursesRecord.name,
+                                        ParamType.String,
                                       ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(6, 0, 0, 0),
-                                              child: Text(
-                                                listViewNursesRecord.name,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          color: Colors.black,
-                                                        ),
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(6, 0, 0, 0),
-                                                  child: Text(
-                                                    listViewNursesRecord
-                                                        .yearsOfExp
-                                                        .toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          color: Colors.black,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  ' Years of Experience',
+                                      'nurseVisitPrice': serializeParam(
+                                        listViewNursesRecord.visitPrice,
+                                        ParamType.double,
+                                      ),
+                                      'nurseEmail': serializeParam(
+                                        listViewNursesRecord.email,
+                                        ParamType.String,
+                                      ),
+                                      'nursePhoneNumber': serializeParam(
+                                        listViewNursesRecord.phoneNumber,
+                                        ParamType.int,
+                                      ),
+                                      'visitDateTime': serializeParam(
+                                        widget.datePicked,
+                                        ParamType.DateTime,
+                                      ),
+                                      'invoiceNumber': serializeParam(
+                                        random_data.randomInteger(
+                                            100000, 999999),
+                                        ParamType.int,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                },
+                                child: Container(
+                                  width: 0,
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 0,
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        offset: Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 8, 8, 8),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          child: Image.network(
+                                            'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(6, 0, 0, 0),
+                                                child: Text(
+                                                  listViewNursesRecord.name,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyMedium
+                                                      .bodyLarge
                                                       .override(
                                                         fontFamily:
                                                             'Readex Pro',
                                                         color: Colors.black,
                                                       ),
                                                 ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(6, 0, 0, 0),
-                                                  child: Text(
-                                                    '\$',
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                6, 0, 0, 0),
+                                                    child: Text(
+                                                      listViewNursesRecord
+                                                          .yearsOfExp
+                                                          .toString(),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            color: Colors.black,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    ' Years of Experience',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          color: Colors.black,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                6, 0, 0, 0),
+                                                    child: Text(
+                                                      '\$',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    listViewNursesRecord
+                                                        .visitPrice
+                                                        .toString(),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -439,91 +500,76 @@ class _HailingPageWidgetState extends State<HailingPageWidget>
                                                               .primary,
                                                         ),
                                                   ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'HailingConfirmation',
+                                              queryParameters: {
+                                                'nurseName': serializeParam(
+                                                  listViewNursesRecord.name,
+                                                  ParamType.String,
                                                 ),
-                                                Text(
+                                                'nurseVisitPrice':
+                                                    serializeParam(
                                                   listViewNursesRecord
-                                                      .visitPrice
-                                                      .toString(),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                      ),
+                                                      .visitPrice,
+                                                  ParamType.double,
                                                 ),
-                                              ],
+                                                'nurseEmail': serializeParam(
+                                                  listViewNursesRecord.email,
+                                                  ParamType.String,
+                                                ),
+                                                'nursePhoneNumber':
+                                                    serializeParam(
+                                                  listViewNursesRecord
+                                                      .phoneNumber,
+                                                  ParamType.int,
+                                                ),
+                                                'visitDateTime': serializeParam(
+                                                  widget.datePicked,
+                                                  ParamType.DateTime,
+                                                ),
+                                                'invoiceNumber': serializeParam(
+                                                  random_data.randomInteger(
+                                                      100000, 999999),
+                                                  ParamType.int,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: Card(
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBtnText,
+                                            elevation: 1,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          context.pushNamed(
-                                            'HailingConfirmation',
-                                            queryParameters: {
-                                              'nurseName': serializeParam(
-                                                listViewNursesRecord.name,
-                                                ParamType.String,
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(4, 4, 4, 4),
+                                              child: Icon(
+                                                Icons
+                                                    .keyboard_arrow_right_rounded,
+                                                color: Colors.black,
+                                                size: 24,
                                               ),
-                                              'nurseVisitPrice': serializeParam(
-                                                listViewNursesRecord.visitPrice,
-                                                ParamType.double,
-                                              ),
-                                              'nurseEmail': serializeParam(
-                                                listViewNursesRecord.email,
-                                                ParamType.String,
-                                              ),
-                                              'nursePhoneNumber':
-                                                  serializeParam(
-                                                listViewNursesRecord
-                                                    .phoneNumber,
-                                                ParamType.int,
-                                              ),
-                                              'visitDateTime': serializeParam(
-                                                widget.datePicked,
-                                                ParamType.DateTime,
-                                              ),
-                                              'invoiceNumber': serializeParam(
-                                                random_data.randomInteger(
-                                                    100000, 999999),
-                                                ParamType.int,
-                                              ),
-                                            }.withoutNulls,
-                                          );
-                                        },
-                                        child: Card(
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryBtnText,
-                                          elevation: 1,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    4, 4, 4, 4),
-                                            child: Icon(
-                                              Icons
-                                                  .keyboard_arrow_right_rounded,
-                                              color: Colors.black,
-                                              size: 24,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

@@ -32,6 +32,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     _model.emailAddressCreateController ??= TextEditingController();
     _model.passwordCreateController ??= TextEditingController();
     _model.confirmPasswordCreateController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -56,7 +57,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 60),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 20),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +65,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     Image.network(
                       'https://i.imgur.com/Ekci5M3.png',
                       width: 240,
-                      height: 156,
+                      height: 150,
                       fit: BoxFit.fitWidth,
                     ),
                   ],
@@ -122,7 +123,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     alignment: AlignmentDirectional(0, 0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 0),
+                                          20, 0, 20, 0),
                                       child: TextFormField(
                                         controller:
                                             _model.emailAddressController,
@@ -372,7 +373,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 20, 20, 0),
+                                        20, 0, 20, 0),
                                     child: TextFormField(
                                       controller:
                                           _model.emailAddressCreateController,
@@ -620,7 +621,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 64, 0, 0),
+                                        0, 24, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         GoRouter.of(context).prepareAuthEvent();

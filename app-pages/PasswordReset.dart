@@ -28,6 +28,7 @@ class _PasswordResetWidgetState extends State<PasswordResetWidget> {
     _model = createModel(context, () => PasswordResetModel());
 
     _model.emailAddressController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -60,7 +61,7 @@ class _PasswordResetWidgetState extends State<PasswordResetWidget> {
               size: 30,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('Login');
             },
           ),
           title: Text(
