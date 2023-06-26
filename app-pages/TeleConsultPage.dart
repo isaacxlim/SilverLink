@@ -34,6 +34,7 @@ class _TeleConsultPageWidgetState extends State<TeleConsultPageWidget>
     _model = createModel(context, () => TeleConsultPageModel());
 
     _model.textController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

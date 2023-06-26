@@ -72,6 +72,8 @@ class _TeleConsultConfirmationWidgetState
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -104,7 +106,7 @@ class _TeleConsultConfirmationWidgetState
               size: 30,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('TeleConsultPage');
             },
           ),
           title: Text(
