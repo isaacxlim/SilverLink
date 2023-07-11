@@ -32,6 +32,8 @@ class _HailingSearchPageWidgetState extends State<HailingSearchPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HailingSearchPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -64,7 +66,7 @@ class _HailingSearchPageWidgetState extends State<HailingSearchPageWidget> {
               size: 30,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('HomePage');
             },
           ),
           title: Text(

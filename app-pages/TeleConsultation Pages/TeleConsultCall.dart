@@ -25,6 +25,8 @@ class _TeleConsultCallPageWidgetState extends State<TeleConsultCallPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TeleConsultCallPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -83,7 +85,7 @@ class _TeleConsultCallPageWidgetState extends State<TeleConsultCallPageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 250, 0, 250),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 160, 0, 190),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,

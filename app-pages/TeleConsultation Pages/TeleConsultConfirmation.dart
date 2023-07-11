@@ -9,35 +9,33 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'hailing_confirmation_model.dart';
-export 'hailing_confirmation_model.dart';
+import 'tele_consult_confirmation_model.dart';
+export 'tele_consult_confirmation_model.dart';
 
-class HailingConfirmationWidget extends StatefulWidget {
-  const HailingConfirmationWidget({
+class TeleConsultConfirmationWidget extends StatefulWidget {
+  const TeleConsultConfirmationWidget({
     Key? key,
     required this.nurseName,
-    required this.nurseVisitPrice,
+    required this.nurseConsultPrice,
     required this.nurseEmail,
     required this.nursePhoneNumber,
-    required this.visitDateTime,
     required this.invoiceNumber,
   }) : super(key: key);
 
   final String? nurseName;
-  final double? nurseVisitPrice;
+  final double? nurseConsultPrice;
   final String? nurseEmail;
   final int? nursePhoneNumber;
-  final DateTime? visitDateTime;
   final int? invoiceNumber;
 
   @override
-  _HailingConfirmationWidgetState createState() =>
-      _HailingConfirmationWidgetState();
+  _TeleConsultConfirmationWidgetState createState() =>
+      _TeleConsultConfirmationWidgetState();
 }
 
-class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
-    with TickerProviderStateMixin {
-  late HailingConfirmationModel _model;
+class _TeleConsultConfirmationWidgetState
+    extends State<TeleConsultConfirmationWidget> with TickerProviderStateMixin {
+  late TeleConsultConfirmationModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -66,15 +64,16 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HailingConfirmationModel());
+    _model = createModel(context, () => TeleConsultConfirmationModel());
 
-    _model.textController ??= TextEditingController();
     setupAnimations(
       animationsMap.values.where((anim) =>
           anim.trigger == AnimationTrigger.onActionTrigger ||
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -107,7 +106,7 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
               size: 30,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('TeleConsultPage');
             },
           ),
           title: Text(
@@ -185,7 +184,7 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                   ),
                   Text(
                     valueOrDefault<String>(
-                      widget.nurseVisitPrice?.toString(),
+                      widget.nurseConsultPrice?.toString(),
                       '0',
                     ),
                     style: FlutterFlowTheme.of(context).displayLarge.override(
@@ -209,7 +208,7 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Due on:',
+                              'Ordered on:',
                               style: FlutterFlowTheme.of(context).labelSmall,
                             ),
                             Padding(
@@ -235,7 +234,7 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Invoice #:',
+                            'Invoice Number:',
                             style: FlutterFlowTheme.of(context).labelSmall,
                           ),
                           Padding(
@@ -262,60 +261,12 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                 child: Text(
-                  'Leave a note for the Nurse (optional)',
-                  style: FlutterFlowTheme.of(context).labelSmall,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 10, 0, 0),
-                child: Container(
-                  width: 356,
-                  height: 51,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Colors.black,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                    child: TextFormField(
-                      controller: _model.textController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelStyle:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Outfit',
-                                ),
-                        hintText: 'Add your request...',
-                        hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        focusedErrorBorder: InputBorder.none,
-                      ),
-                      style: FlutterFlowTheme.of(context).labelMedium.override(
-                            fontFamily: 'Outfit',
-                          ),
-                      textAlign: TextAlign.start,
-                      maxLines: 5,
-                      validator:
-                          _model.textControllerValidator.asValidator(context),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
-                child: Text(
                   'Nurse Information',
                   style: FlutterFlowTheme.of(context).labelSmall,
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -406,7 +357,7 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Booking Address:',
+                              'Billing Address:',
                               style: FlutterFlowTheme.of(context).labelSmall,
                             ),
                             Padding(
@@ -426,40 +377,6 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Consultation Date and Time:',
-                            style: FlutterFlowTheme.of(context).labelSmall,
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                            child: Text(
-                              dateTimeFormat('MMMMEEEEd', widget.visitDateTime),
-                              style: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                    fontFamily: 'Outfit',
-                                    color: Colors.black,
-                                  ),
-                            ),
-                          ),
-                          Text(
-                            dateTimeFormat('jm', widget.visitDateTime),
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -470,15 +387,42 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          print('Button pressed ...');
+                        },
+                        text: 'Visa *0725',
+                        icon: Icon(
+                          Icons.credit_card_rounded,
+                          size: 15,
+                        ),
+                        options: FFButtonOptions(
+                          width: 130,
+                          height: 40,
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          iconPadding:
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          textStyle: FlutterFlowTheme.of(context).bodyLarge,
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                    Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
                           },
-                          text: 'Visa *0725',
+                          text: 'Share',
                           icon: Icon(
-                            Icons.credit_card_rounded,
+                            Icons.ios_share,
                             size: 15,
                           ),
                           options: FFButtonOptions(
@@ -499,33 +443,6 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
-                        text: 'Share',
-                        icon: Icon(
-                          Icons.ios_share,
-                          size: 15,
-                        ),
-                        options: FFButtonOptions(
-                          width: 130,
-                          height: 40,
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          textStyle: FlutterFlowTheme.of(context).bodyLarge,
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).alternate,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -533,11 +450,11 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                 padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    context.pushNamed('HomePage');
+                    context.pushNamed('TeleConsultCallPage');
                   },
-                  text: 'Confirm Booking',
+                  text: 'Confirm Booking and Call Now',
                   icon: Icon(
-                    Icons.check_circle_outline_rounded,
+                    Icons.call,
                     size: 15,
                   ),
                   options: FFButtonOptions(
@@ -545,7 +462,7 @@ class _HailingConfirmationWidgetState extends State<HailingConfirmationWidget>
                     height: 48,
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: FlutterFlowTheme.of(context).primary,
+                    color: Color(0xFF018111),
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Readex Pro',
                           color: Colors.white,
